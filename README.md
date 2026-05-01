@@ -1,361 +1,365 @@
-# BCS Reverse N-Money System
+# BCS 逆向货币 N 系统
 
-### 1. Purpose of the Project
+## 中文说明
 
-Many people today face unemployment, shrinking job opportunities, and age discrimination. In some places, people over 35 can find it extremely difficult to obtain stable work. Some have suggested that consumers should stop buying products from companies that refuse to hire older workers, but that idea is hard to operate in practice. Ordinary consumers cannot reliably connect every purchase to a company's employment responsibility. This project uses N-money to abstract that relationship into a monetary rule: instead of forcing a direct employment promise between a consumer and a company, the system adds a "being-needed" settlement dimension to money, so that consumption, sales, employment, and N flows can form a verifiable economic feedback loop.
+### 1. 项目目的
 
-This project is not designed to make people rich overnight, nor to add another burden to ordinary people. It uses blockchain and digital-currency technology, but it has nothing to do with mining, hash-power competition, or speculative token hype. Its purpose is economic balance. Money is a tool for allocating social resources, and the current one-directional D-money system is gradually exposing a structural weakness: it represents demand and purchasing power, but it does not directly represent whether people are still needed by the economy. N-money is proposed as a reverse monetary tool to help correct that imbalance, reduce the risk of people being eliminated by market forces, and provide a new mechanism for preventing economic crises.
+现在很多人面临失业、年龄歧视和就业机会收缩，尤其是 35 岁以后很难再找到稳定工作。有人说“不雇佣 35 岁以上员工的公司，就不要买它们的产品”，但现实中很难执行，因为普通消费者无法把每次购买和就业责任稳定连接起来。本项目希望用 N 货币把这种关系抽象出来：你不是直接和某家公司签一份就业承诺，而是在货币规则中加入“被需要”的结算维度，让消费、销售、就业和 N 流动形成可验证的经济反馈。
 
-The current project is only a very early beginning. It is not a final answer. It is a prototype that can run, be discussed, be challenged, and be improved. Just as early Bitcoin began as a small experiment and later changed how many people think about money and network cooperation, BCS and N-money need more people to join and help turn this idea into working code, rules, governance, applications, and social understanding.
+这个项目不是为了让人一夜暴富，也不是为了给普通人增加负担。它只是使用了区块链和数字货币的技术形式，但和挖矿、炒币、算力竞争没有关系。它的目标是让货币重新成为更平衡的社会资源分配工具，用逆向货币 N 调节现行单向 D 货币长期积累下来的失衡，减少人被市场经济淘汰的风险，并为避免经济危机提供一种新的制度工具。
 
----
-
-### 2. Source of the Idea
-
-The theoretical source of this project is the a Bidirectional Currency System, or BCS from me.
-
-In early barter exchange, one exchange usually satisfied two directions at the same time. You needed what another person had, so your demand was satisfied. The other person accepted what you had, so you were also needed. Demand and being demanded appeared together in the same act of exchange. Barter was inefficient because it required a double coincidence of wants, but it preserved a direct form of reciprocity.
-
-Money solved the double-coincidence problem and greatly improved exchange efficiency. People could sell labor or goods, receive money, and then use money to buy other goods. Money made specialization, saving, pricing, markets, and long-term contracts possible. It was one of humanity's most important institutional inventions.
-
-However, money also introduced a structural separation. When a buyer pays money, the buyer's consumption need is satisfied, but the buyer's own being-needed status is not automatically validated in the same transaction. In modern economies, being needed is mostly expressed through employment, wages, orders, positions, and income. When jobs are abundant, this problem is less visible. But as industrialization, automation, platformization, and capital concentration advance, more people may lose income, bargaining power, and stable employment. The being-needed side gradually disappears from the monetary settlement process.
-
-The core weakness of the current one-directional D-money system is not that it has no value. Its weakness is that it expresses demand and purchasing power very well, but does not directly express being needed. In early industrial phases, when goods were scarce and labor demand was strong, this weakness was less obvious. As productive capacity grows, goods become abundant, and automation becomes stronger, the weakness becomes more serious. Society can produce more and more, while many people lose the income needed to participate in consumption. Firms may continue reducing labor costs, further weakening aggregate demand.
-
-BCS starts from this missing direction. D still represents ordinary money, prices, and payments. N represents the being-needed settlement asset. Sales and wage payments are no longer only one-directional flows of D; they also trigger reverse flows of N. The market is not abolished. It is given a new feedback dimension.
+当前项目还只是一个很初级的开始。它不是最终答案，而是一个可以运行、可以讨论、可以改进的原型。就像早期比特币只是一个很小的实验，后来改变了很多人对货币和网络协作的理解一样，BCS 和 N 货币也需要更多人加入，一起把这个想法从代码、规则、治理、应用和社会理解上逐步完善。
 
 ---
 
-### 3. What This Project Is and Is Not
+### 2. 思想来源
 
-This project is a technical prototype for reverse N-money. It uses blockchain, UTXO, identity authentication, governance, multi-node synchronization, offline transactions, and optional privacy proofs to test whether BCS monetary rules can be implemented in software.
+本项目的思想来源我的Bidirectional Currency System，也就是“双向货币系统”或“逆向货币系统”的基本思想。
 
-It is not a normal public-chain project. It does not pursue open mining, does not rely on Proof-of-Work competition, does not encourage speculation, and does not treat token price appreciation as the main goal. The key goal is not to create another speculative asset, but to build a settlement system that can express both demand and being-needed relations.
+在人类早期的物物交换中，一次交换通常同时满足两个方向。你需要别人的东西，说明你的需求被满足；别人愿意接受你的东西，说明你也被别人需要。也就是说，需求和被需求在同一次交换中同时出现。虽然物物交换效率很低，需要双方刚好互相需要对方的东西，但它保留了一种直接的互惠关系。
 
-It is not a direct replacement for real-world money. At the current stage, cash, banks, payment gateways, invoices, and payroll systems continue to operate as they already do. The project mainly processes N-money on-chain. D is not forced to become an on-chain asset. The system does not force bank or payment-gateway integration. It uses `external_amount` to represent the external real-world amount used to calculate N flows. External payment references can be optionally stored, and later the system may choose to integrate banks, payment gateways, invoice systems, payroll systems, or on-chain D assets.
+后来货币出现以后，交换效率大幅提高。货币解决了物物交换中“双重巧合”的问题，让人们可以先卖出自己的劳动或商品，得到货币，再用货币购买别人的商品。货币让分工、储蓄、价格、市场和长期契约成为可能，这是人类社会的重要发明。
 
-It is also not a system that magically guarantees jobs for everyone. N-money cannot create jobs out of nothing and cannot replace real business operations. Its goal is to make relationships such as who creates employment, who provides being-needed opportunities, and who consumes social demand computable, auditable, and governable through monetary flow.
+但货币也带来了一个结构性变化：购买时，买方的需求被满足了，但买方自身是否被别人需要，并不会在同一笔交易中自动得到确认。现代社会中，一个人是否“被需要”，主要通过就业、工资、订单、职位和收入来体现。只要能找到工作、能卖出劳动或产品，这个问题不明显；但如果工业化、自动化、平台化和资本集中不断发展，越来越多的人可能消费能力不足、就业机会不足、议价能力下降，那么“被需要”这一侧就会逐渐丢失。
+
+现行单向 D 货币的核心问题不在于它没有价值，而在于它只很好地表达了“需求”和“购买力”，却没有在货币结算中直接表达“被需要”。在工业化早期，商品不够多，劳动力需求旺盛，这个缺点不明显。随着生产能力越来越强，商品越来越多，自动化越来越强，单向货币系统会越来越容易出现一个矛盾：社会有能力生产很多东西，但很多人因为没有工作或收入不足，无法参与消费；企业为了利润继续降低用工，进一步削弱社会总需求。
+
+BCS 的出发点就是补上这个缺失的方向。D 仍然代表现实货币、价格和支付；N 则代表“被需要”的结算资产。销售和工资不再只是 D 的单向流动，而是同时触发 N 的反向流动。这样，市场不是被取消，而是被增加了一个新的反馈维度。
 
 ---
 
-### 4. Core Concepts
+### 3. 这个项目是什么，不是什么
 
-#### 4.1 D: Demand Money
+这个项目是一个逆向货币 N 的技术原型。它使用区块链、UTXO、身份认证、治理、多节点同步、离线交易和可选隐私证明等技术，来验证 BCS 货币规则是否可以被工程化实现。
 
-D can be understood as ordinary real-world money or a normal payment amount. It may come from cash, bank transfers, cards, mobile payments, Stripe, invoices, payroll records, or other real-world payment systems.
+它不是普通公链项目。它不追求开放挖矿，不依赖 PoW 算力竞争，不鼓励投机炒作，也不把“币价上涨”作为主要目标。它的重点不是制造一个新的投机资产，而是建立一个可以表达“需求”和“被需求”双向关系的结算系统。
 
-In the current project, D is not forcibly issued as an on-chain asset. The system does not custody users' real-world funds, does not handle fiat deposits or withdrawals, does not perform bank clearing, and does not force payment-gateway integration. The chain only needs an external amount, `external_amount`, which is used to calculate the corresponding N flow.
+它不是直接替代现实货币。当前阶段，现实货币、银行、现金、支付网关、发票和工资单仍然按原来的方式存在。项目链上主要处理 N 货币。D 不强制上链，不强制接入银行或支付接口，而是先用 `external_amount` 表示外部现实金额，作为计算 N 流动的依据。外部支付凭证可以作为可选引用保存，后续如果发展需要，可以再接入银行、支付网关、发票系统、工资系统、oracle 或链上 D 资产。
 
-#### 4.2 N: Being-Needed Money
+它也不是一个保证任何人马上获得工作的系统。N 货币不能凭空创造岗位，也不能替代现实企业经营。它要做的是让“谁创造就业、谁提供被需要机会、谁消耗社会需求”这些关系进入可计算、可审计、可治理的货币流动中，形成长期调节力量。
 
-N is the on-chain currency processed by this project. It represents the being-needed dimension in economic relationships. N can be issued, transferred, burned, replenished, and audited.
+---
 
-In a sale, after a seller receives a real-world payment, the seller must transfer a proportional amount of N to the buyer. This expresses that the seller receives income from consumer demand and must release part of its being-needed capacity to the consumer.
+### 4. 核心概念
 
-In a wage transaction, after an employer pays wages in the real world, the worker transfers a proportional amount of N to the employer. This expresses that the employer provided a job opportunity that helped the worker obtain real-world income, and therefore receives N that can support future sales capacity.
+#### 4.1 D：需求货币
 
-#### 4.3 phi and psi
+D 可以理解为现实中的普通货币或普通支付金额。它可以来自现金、银行转账、银行卡、微信、支付宝、Stripe、发票、工资单或其他现实支付系统。
 
-`phi` is the sales-rule parameter. It determines how much N must be rebated to a buyer for a given external sale amount.
+在当前项目里，D 不作为链上资产强制发行。系统不托管用户的现实资金，不处理法币充值提现，不做银行清算，不强制接入支付网关。链上只需要知道一个外部金额 `external_amount`，用它计算对应的 N 流动。
+
+#### 4.2 N：被需要货币
+
+N 是本项目真正处理的链上货币。它表达的是经济关系中的“被需要”维度。N 可以被发放、转移、销毁、补充和审计。
+
+在销售中，商家获得现实支付金额后，需要向买家回馈一定比例的 N。这个规则表达：商家从消费者需求中获得收入，也要释放一部分“被需要”能力给消费者。
+
+在工资中，雇主支付现实工资后，工人需要向雇主转移一定比例的 N。这个规则表达：雇主提供了工作机会，帮助工人获得现实收入，因此雇主获得一部分 N，用来支撑它未来的销售能力。
+
+#### 4.3 phi 和 psi
+
+`phi` 是销售规则参数。它决定销售外部金额需要对应多少 N 回馈给买家。
 
 ```text
 N_to_buyer >= ceil(external_amount * phi)
 ```
 
-`psi` is the wage-rule parameter. It determines how much N must be transferred to an employer for a given external wage amount.
+`psi` 是工资规则参数。它决定工资外部金额需要对应多少 N 转移给雇主。
 
 ```text
 N_to_employer >= ceil(external_amount * psi)
 ```
 
-These parameters should not be arbitrary or permanently fixed. They should be governed by the system and adjusted according to pilot data, employment conditions, N circulation, merchant pressure, user acceptance, and economic-stability goals.
+这两个参数不是随便写死的。它们应该由系统治理决定，并根据试点效果、就业情况、N 流动情况、商户压力、用户接受度和经济稳定目标逐步调整。
 
-#### 4.4 Identity
+#### 4.4 身份认证
 
-The system needs to know who is a user, merchant, employer, validator, and governor. The current design uses DID and VC. A user generates a DID, receives a VC from a trusted anchor or governance-approved institution, and submits an on-chain registration. After authentication, the user can participate in key flows such as receiving initial N, joining governance, or performing privileged transactions.
+系统需要知道谁是用户、谁是商户、谁是雇主、谁是治理者。当前方案使用 DID 和 VC。用户先生成 DID，由信任锚或治理认可机构签发 VC，再提交链上注册。身份通过后，用户才能参与某些关键流程，例如接收初始 N、参与治理或进行高权限交易。
 
-#### 4.5 Governance
+#### 4.5 治理
 
-In the early stage, the system should be governed by founders and partners through joint voting. This allows fast iteration, prevents early abuse, and makes it possible to fix system problems quickly. As the network matures, governance should gradually be transferred to the entire system, allowing users, nodes, merchants, employers, and other participants to vote through transparent rules.
+前期系统由创始人和合伙人共同表决治理。这样做是为了快速试错、避免早期规则被恶意利用，也方便修复系统问题。随着网络逐步成熟，治理权应逐步移交给整个系统，让用户、节点、商户、雇主和其他参与者通过规则参与表决。
 
-Governance is not only voting. Governance decides parameters, trusted anchors, identity policies, N issuance rules, replenishment rules, validator sets, upgrade plans, and risk responses.
+治理不只是投票。治理要决定参数、信任锚、身份认证策略、N 发放规则、补充规则、验证者集合、升级计划和风险处置。
 
 ---
 
-### 5. Overall Operating Flow
+### 5. 项目整体运行流程图
 
 ```mermaid
 flowchart TD
-    A["User/Merchant/Employer creates wallet"] --> B["Generate address and DID"]
-    B --> C["Submit DID document and VC"]
-    C --> D{"Identity approved"}
-    D -- "No" --> E["Wait for review or provide more material"]
-    D -- "Yes" --> F["Enter identity registry"]
+    A["用户/商户/雇主创建钱包"] --> B["生成地址和 DID"]
+    B --> C["提交 DID 文档和 VC 凭证"]
+    C --> D{"身份是否通过认证"}
+    D -- "否" --> E["等待复核或补充材料"]
+    D -- "是" --> F["进入系统身份注册表"]
 
-    F --> G["Governance or issuer mints initial N"]
-    G --> H["User receives N UTXO"]
+    F --> G["治理或发行模块发放初始 N"]
+    G --> H["用户获得 N UTXO"]
 
-    H --> I{"Real economic activity occurs"}
-    I -- "Plain N transfer" --> J["Build TRANSFER tx"]
-    I -- "Sale" --> K["Buyer pays through real-world payment"]
-    I -- "Wage" --> L["Employer pays wage through real-world payment"]
+    H --> I{"发生现实经济活动"}
+    I -- "普通 N 转账" --> J["构造 TRANSFER 交易"]
+    I -- "销售" --> K["买方用现实支付方式付款"]
+    I -- "工资" --> L["雇主用现实支付方式发薪"]
 
-    K --> M["Sale tx records external_amount"]
-    M --> N["Optionally record bank/cash/gateway/invoice reference"]
-    N --> O["Calculate minimum N: ceil(external_amount * phi)"]
-    O --> P["Seller outputs N to buyer"]
+    K --> M["销售交易写入 external_amount"]
+    M --> N["可选写入银行/现金/支付网关/发票引用"]
+    N --> O["计算最低 N: ceil(external_amount * phi)"]
+    O --> P["卖方向买方输出 N"]
 
-    L --> Q["Wage tx records external_amount"]
-    Q --> R["Optionally record payroll/bank/payment reference"]
-    R --> S["Calculate minimum N: ceil(external_amount * psi)"]
-    S --> T["Worker outputs N to employer"]
+    L --> Q["工资交易写入 external_amount"]
+    Q --> R["可选写入工资单/银行/支付凭证引用"]
+    R --> S["计算最低 N: ceil(external_amount * psi)"]
+    S --> T["工人向雇主输出 N"]
 
-    J --> U["Sign transaction"]
+    J --> U["签名交易"]
     P --> U
     T --> U
 
-    U --> V{"Online"}
-    V -- "Yes" --> W["Submit to node API"]
-    V -- "No" --> X["Cache offline transaction locally"]
-    X --> Y["Sync after reconnect"]
+    U --> V{"是否在线"}
+    V -- "在线" --> W["提交节点 API"]
+    V -- "离线" --> X["本地缓存离线交易"]
+    X --> Y["恢复联网后同步"]
     Y --> W
 
-    W --> Z["Node validates UTXO/signature/identity/parameters"]
-    Z --> AA{"N rule satisfied"}
-    AA -- "No" --> AB["Reject transaction with reason"]
-    AA -- "Yes" --> AC["Enter mempool"]
-    AC --> AD["PoA/PoA-BFT validators produce block"]
-    AD --> AE["Block confirmed and UTXO updated"]
+    W --> Z["节点验证 UTXO/签名/身份/参数"]
+    Z --> AA{"是否满足 N 规则"}
+    AA -- "否" --> AB["拒绝交易并返回原因"]
+    AA -- "是" --> AC["进入 mempool"]
+    AC --> AD["PoA/PoA-BFT 验证者出块"]
+    AD --> AE["区块确认并更新 UTXO"]
 
-    AE --> AF["N flow changes sales capacity and employment feedback"]
-    AF --> AG["Governance observes data and adjusts parameters"]
+    AE --> AF["N 流动改变销售能力和就业反馈"]
+    AF --> AG["治理观察数据并调整参数"]
     AG --> H
 ```
 
 ---
 
-### 6. Explanation of the Flow
+### 6. 流程文字说明
 
-#### 6.1 Entering the System
+#### 6.1 身份进入系统
 
-When a user first enters the system, they do not mine and do not buy a speculative token first. They create a wallet, generate keys, and generate a DID. The DID is the user's decentralized identity in the system. Then the user receives a VC from a trusted anchor or governance-approved institution, proving that the user is a legitimate participant.
+用户第一次进入系统时，不是先去挖矿，也不是先购买投机资产，而是创建钱包、生成密钥和 DID。DID 是用户在系统中的去中心化身份标识。随后，用户需要通过信任锚或治理认可机构获得 VC 凭证，证明自己是合法参与者。
 
-When a node receives an identity registration request, it verifies DID control, VC signature, trusted issuer status, credential expiration, and governance rules. After approval, the identity enters the registry. Identity state affects N issuance, transaction permissions, and governance eligibility.
+节点收到身份注册请求后，会验证 DID 控制权、VC 签名、issuer 是否可信、凭证是否过期，以及注册请求是否符合治理规则。通过后，身份进入系统注册表。身份状态会影响后续 N 发放、交易权限和治理资格。
 
-#### 6.2 Initial N Issuance
+#### 6.2 初始 N 发放
 
-N is not mined. In the early stage, governance or an issuance module can mint initial N according to identity authentication results. The issuance rule should be transparent. For example, each authenticated user may receive a certain initial amount of N, or different pilot roles may receive different amounts.
+N 不是通过挖矿获得。前期可以由治理或发行模块根据身份认证结果进行初始发放。发放规则需要透明，例如每个通过认证的用户获得一定初始 N，或者根据试点规则给商户、工人、雇主分配不同额度。
 
-The key requirements are fairness and auditability. The system should record who received N, at which height, how much, which governance signatures approved it, and whether supply limits were respected.
+这一步的核心是公平和可审计。系统要记录谁获得了 N、在什么高度获得、数量是多少、由哪些治理签名确认、是否有发放上限。这样可以避免 N 一开始就被少数人随意控制。
 
-#### 6.3 Plain N Transfers
+#### 6.3 普通 N 转账
 
-A plain N transfer is similar to a normal digital-currency transfer. The user selects UTXOs, fills in recipient and amount, signs the transaction, and submits it to a node. The node verifies input existence, no double spend, valid signatures, and reasonable outputs. If valid, the transaction enters the mempool and waits for block confirmation.
+普通 N 转账类似普通数字货币转账。用户选择 UTXO，填写收款地址和金额，签名后提交节点。节点验证输入是否存在、是否未花费、签名是否正确、输出金额是否合理，然后把交易放入 mempool，等待出块确认。
 
-Plain N transfers do not involve external amounts, `phi`, or `psi`.
+普通 N 转账不涉及外部支付金额，也不涉及 `phi` 或 `psi`。
 
-#### 6.4 Sales Transactions
+#### 6.4 销售交易
 
-Sales transactions are one of the most important flows. In the real world, the buyer may pay the merchant through cash, bank transfer, mobile payment, card, payment gateway, or another payment method. The chain does not forcibly process that real-world payment and does not require payment-gateway integration.
+销售交易是系统最重要的流程之一。现实中，买方可以使用现金、银行、微信、支付宝、支付网关或其他方式向商户付款。链上不强制处理这笔现实支付，也不强制接入支付网关。
 
-The on-chain sale transaction must at least record `external_amount`, the calculation base for the real-world sale amount. The merchant may optionally attach an order number, invoice hash, bank receipt, payment-gateway order id, or another reference.
+链上销售交易至少需要写入 `external_amount`，也就是现实销售金额的计算基数。商户可以选择附带订单号、发票哈希、银行流水、支付网关订单号或其他凭证引用，但这些是可选字段。
 
-When validating a sale transaction, the node reads the current `phi` and calculates the minimum N rebate. If the N output to the buyer is insufficient, the transaction is rejected. If sufficient, it can enter the mempool and wait for confirmation.
+节点验证销售交易时，会读取当前 `phi`，计算最低 N 回馈。如果商户给买方的 N 输出不足，交易会被拒绝。如果 N 足够，交易可以进入 mempool 并等待确认。
 
-The meaning of the sales rule is that merchants cannot only receive D income from social demand; they must also release part of their N. The larger the merchant's sales scale, the greater its need for N. N therefore becomes an economic constraint that limits unlimited expansion and reconnects consumption with employment.
+销售规则的意义在于：商户不能只从社会需求中获得 D 收入，也要付出一部分 N。商户销售规模越大，对 N 的需求越大。这样，N 就成为限制无限扩张、连接消费和就业的一种经济约束。
 
-#### 6.5 Wage Transactions
+#### 6.5 工资交易
 
-Wage transactions are the other key loop. In the real world, the employer pays wages through cash, bank transfer, payroll, or another payment system. The chain does not forcibly process the wage payment itself and does not require payroll records to be stored.
+工资交易是另一条关键回路。现实中，雇主通过现金、银行、工资单或支付系统向工人发工资。链上不强制处理工资支付本身，也不强制保存工资单。
 
-The on-chain wage transaction must at least record `external_amount`, the wage amount used as the calculation base. The worker transfers a proportional amount of N to the employer, determined by `psi`. Payroll records, bank receipts, and payment proofs can be optional references.
+链上工资交易至少需要写入 `external_amount`，也就是工资金额的计算基数。工人向雇主转移一定比例的 N，比例由 `psi` 决定。工资单、银行流水和支付凭证可以作为可选引用。
 
-The meaning of the wage rule is that employers who provide job opportunities can receive N, and N supports future sales capacity. Employment is not only a cost to the firm; it also becomes a way to acquire N. The system tries to make providing work an important condition for long-term business expansion.
+工资规则的意义在于：提供就业机会的雇主可以获得 N，而 N 又能支撑未来销售能力。这样，雇佣劳动不只是企业的成本，也成为企业获得 N 的渠道之一。系统希望用这种方式把“提供工作”重新变成企业长期发展的重要条件。
 
-#### 6.6 Offline Transactions
+#### 6.6 离线交易
 
-The project includes offline-payment capability. When a user is temporarily offline, the wallet can build a transaction from the latest local UTXO snapshot, sign it locally, and cache it. After reconnecting, the wallet submits the transaction to a node.
+项目设计了离线支付能力。用户在短时间断网时，可以基于最近同步的 UTXO 快照构造交易、本地签名并缓存。恢复联网后，钱包会把交易提交给节点。
 
-Offline transactions may encounter conflicts. For example, the same UTXO may already have been spent by another transaction, or `phi` and `psi` may have changed while the user was offline. The system must detect conflicts, try to rebuild transactions, recalculate N, ask the user to sign again, or reject clearly.
+离线交易可能遇到冲突，例如同一个 UTXO 已经被别的交易花费，或者离线期间 `phi`、`psi` 参数发生变化。系统需要识别冲突，尝试重建交易、重新计算 N、提示用户补签，或者明确拒绝。
 
-Offline capability matters because real-world payments do not always happen under stable network conditions. A monetary system for ordinary people cannot assume perfect connectivity.
+离线能力很重要，因为现实支付并不总是在网络稳定环境中发生。一个面向普通人的货币系统，不能只适合高质量网络和专业用户。
 
-#### 6.7 Node Validation and Block Production
+#### 6.7 节点验证和出块
 
-After receiving a transaction, a node performs several layers of validation. First, transaction structure: version, inputs, outputs, amounts, and serialization. Second, UTXO and signatures: inputs must exist, be unspent, and satisfy locking scripts. Third, identity: participants must be authenticated or not suspended when required. Fourth, BCS rules: sale and wage transactions must satisfy N ratios. Fifth, governance parameters: the node uses the parameters active at the relevant height.
+节点收到交易后，会进行多层验证。第一层是交易结构，检查版本、输入、输出、金额、序列化格式。第二层是 UTXO 和签名，检查输入是否存在、是否未花费、签名是否满足锁定脚本。第三层是身份，检查相关用户是否已认证或是否被暂停。第四层是 BCS 规则，检查销售和工资交易是否满足 N 比例。第五层是治理参数，检查当前高度对应的 `phi`、`psi` 和其他规则。
 
-Valid transactions enter the mempool. Validators produce blocks using PoA or PoA-BFT. The system does not mine and does not consume large amounts of computing power. Validators are authorized by governance. In the early stage, founders and partners may maintain validator nodes. Later, validator selection should gradually be decided by system governance.
+通过验证的交易进入 mempool。验证者节点使用 PoA 或 PoA-BFT 出块。这个系统不挖矿，不消耗大量算力。验证者由治理授权，前期可以由创始人和合伙人共同维护，后期逐步开放给系统治理决定。
 
-#### 6.8 Governance Feedback Loop
+#### 6.8 治理闭环
 
-The system's rules are not permanently fixed. Governors must observe N circulation, sales capacity, employment feedback, user experience, merchant pressure, transaction failure reasons, offline conflicts, identity abuse, and demand for external payment integration.
+系统不是一次写死规则。治理者需要观察 N 流通、销售容量、就业反馈、用户体验、商户压力、交易失败原因、离线冲突、身份滥用和外部支付接入需求。
 
-If `phi` is too high, merchant pressure may become too heavy and transaction failure rates may increase. If `phi` is too low, N may not sufficiently constrain sales scale. If `psi` is too high, workers may face too much burden. If `psi` is too low, employers may not acquire enough N through employment. Governance must search for a dynamic balance among these goals.
-
----
-
-### 7. Relationship Between N and D
-
-At the current stage, the project mainly processes N.
-
-D is not a mandatory on-chain asset. D may be real-world money, bank payment, cash payment, payment-gateway settlement, invoice amount, payroll amount, or another real economic amount. On-chain transactions use `external_amount` to represent the D-side amount and calculate proportional N flow.
-
-External payment references are optional. A sale or wage transaction may only record amount and participants, or may additionally attach a bank receipt, invoice, payroll record, or payment-gateway proof. Whether such proof should be mandatory should not be hard-coded at the beginning. A more practical path is to lower entry barriers in the MVP, allow manual declarations and optional references, then add proof hashes, merchant signatures, trusted-anchor verification, payment gateways, bank APIs, invoice systems, payroll systems, or oracles as the pilot matures.
-
-This approach has several benefits.
-
-First, users can understand it more easily. Real-world payment continues as usual; the BCS wallet handles N flow.
-
-Second, implementation is easier. The system does not need to solve bank integration, fiat clearing, payment licensing, or stablecoin custody at the beginning.
-
-Third, compliance pressure is lower. The project can first operate as an N-rule ledger and identity-governance system, without directly custodying real-world funds.
-
-Fourth, future expansion remains open. After real demand becomes clear, the system can decide whether specific industries should require payment proof, or whether on-chain D should be introduced.
+如果 `phi` 太高，商户压力可能过大，交易失败率可能上升。如果 `phi` 太低，N 对销售规模的约束可能不足。如果 `psi` 太高，工人负担可能过重；如果 `psi` 太低，雇主通过就业获得 N 的能力可能不足。治理的任务就是在这些目标之间寻找动态平衡。
 
 ---
 
-### 8. Why This May Help With Employment and Crises
+### 7. N 和 D 的关系
 
-In the current market economy, firms pursue profit maximization. If technology can produce more goods with fewer workers, firms tend to reduce labor. In the short term, costs fall and profits rise. In the long term, if many people lose income, aggregate demand falls. Goods become more abundant, but fewer people have purchasing power. The economy may then suffer from demand deficiency, overcapacity, unemployment, and crisis.
+本项目当前阶段主要处理 N。
 
-Traditional policies use fiscal stimulus, monetary easing, subsidies, transfers, public works, and employment support to correct these problems. These policies can help, but they often depend on government judgment, budget capacity, political consensus, and execution. They may also create asset bubbles, debt accumulation, or resource misallocation.
+D 不是强制链上资产。D 可以是现实货币，也可以是银行支付、现金支付、支付网关、发票金额、工资单金额或其他现实经济金额。链上交易用 `external_amount` 表示 D 侧金额，用来计算 N 的比例流动。
 
-N-money attempts to embed the adjustment mechanism inside transaction rules. The more a merchant sells, the more N it needs. The more an employer provides jobs, the more N it can obtain through wage-linked rules. Consumers receive N when buying goods. Workers transfer N when receiving wages. Firms obtain N through employment and markets, then use N to support sales. Consumption, employment, and sales are no longer completely disconnected.
+外部支付引用是可选的。也就是说，销售或工资交易可以只写入金额和参与方，也可以附带银行流水、发票、工资单或支付网关凭证。是否强制凭证，不应该在早期系统里一开始就写死。更合理的方式是：MVP 阶段先降低接入门槛，允许手动声明和可选引用；试点阶段增加凭证哈希、商户签名或信任锚验证；成熟阶段再根据需要接入支付网关、银行 API、发票系统、工资系统或 oracle。
 
-This is not anti-market. It adds a feedback loop to the market. Markets can still price, compete, innovate, and specialize, but they can no longer completely ignore who provides jobs, who maintains mass income, and who consumes social demand.
+这样做有几个好处。
 
-If the mechanism works, it may become an automatic stabilizer. A firm that sells a lot but does not provide enough employment or acquire enough N will face sales-capacity constraints. A firm that provides more employment can obtain more N and therefore gain more sales capacity. This rule may reduce extreme concentration, lower the risk of demand breakdown, and help prevent economic crises.
+第一，用户更容易理解。现实支付照常进行，BCS 钱包只负责 N 的流动。
+
+第二，工程更容易落地。系统不需要一开始就解决银行接入、法币清算、支付牌照和稳定币托管问题。
+
+第三，合规压力更小。项目先作为 N 规则账本和身份治理系统运行，不直接托管现实资金。
+
+第四，后续扩展空间更大。等实际需求明确后，再决定是否强制某些行业提供凭证，或者是否引入链上 D。
 
 ---
 
-### 9. Technical Operation
+### 8. 为什么这可能缓解就业和危机问题
 
-The current project is implemented mainly in Python. The core directory is `bcs_chain/`. The system includes:
+现行市场经济中，企业追求利润最大化。如果技术进步能用更少人生产更多商品，企业会倾向于减少用工。短期看，企业成本下降、利润上升；长期看，如果很多人失去收入，社会总需求就会下降。商品越来越多，但有购买力的人越来越少，经济就会出现需求不足、产能过剩、失业和危机。
 
-| Module | Role |
+传统政策通常用财政刺激、货币宽松、补贴、转移支付、公共工程或就业扶持来修正这些问题。这些政策有作用，但往往依赖政府判断、预算能力、政治共识和执行效率，也可能造成资产泡沫、债务积累或资源错配。
+
+N 货币的想法是把调节机制放进交易规则本身。商家销售越多，就越需要 N；雇主提供工作，就能通过工资规则获得 N。消费者购买商品时获得 N，工人获得工资时付出 N，企业通过雇佣和市场获得 N，再用 N 支撑销售。这样，消费、就业和销售之间不再完全断开。
+
+这不是反市场，而是给市场补上一个反馈环。市场仍然可以定价、竞争、创新和分工，但不能完全忽视“谁在提供就业机会、谁在维持大众收入、谁在消耗社会购买力”这些问题。
+
+如果这个机制运行良好，它可能形成一种自动稳定器。当企业大量销售却不提供足够就业或不获得足够 N 时，销售能力会受到约束；当企业提供更多就业时，可以获得更多 N，从而拥有更大的销售空间。这种规则有可能减少极端集中、降低需求断裂风险，并缓解经济危机的形成条件。
+
+---
+
+### 9. 技术运行方式
+
+当前项目使用 Python 实现，核心目录是 `bcs_chain/`。系统包括以下模块：
+
+| 模块 | 作用 |
 |---|---|
-| `core/` | Transactions, blocks, UTXO, scripts, validators, mempool, state |
-| `currency/` | N rules, `phi/psi`, N lifecycle, feasibility checks |
-| `identity/` | DID, VC, identity registry, trust anchors, permissions |
-| `offline/` | Offline tx cache, sync, conflict resolution, light-client view |
-| `wallet/` | Wallet, transaction builder, offline mode, import/export |
-| `api/` | REST and gRPC interfaces |
-| `network/` | P2P nodes, message broadcast, peer management |
-| `consensus/` | PoA/PoA-BFT validator consensus |
-| `zk/` | Optional zero-knowledge proof prototype |
-| `simulation/` | Economic simulation and stress testing |
+| `core/` | 交易、区块、UTXO、脚本、验证器、mempool、状态 |
+| `currency/` | N 货币规则、`phi/psi`、N 生命周期、可行性检查 |
+| `identity/` | DID、VC、身份注册、信任锚、权限认证 |
+| `offline/` | 离线交易缓存、同步、冲突解决、轻客户端视图 |
+| `wallet/` | 钱包、交易构建、离线模式、导入导出 |
+| `api/` | REST 和 gRPC 接口 |
+| `network/` | P2P 节点、消息广播、peer 管理 |
+| `consensus/` | PoA/PoA-BFT 验证者共识 |
+| `zk/` | 可选零知识证明原型 |
+| `simulation/` | 经济仿真和压力测试 |
 
-The system uses a UTXO model. N exists as on-chain UTXOs. A transaction spends old UTXOs and creates new ones. This helps offline payment, double-spend detection, and parallel validation.
+系统的基本数据结构采用 UTXO 模型。N 作为链上资产存在于 UTXO 中。交易花费旧 UTXO，创建新 UTXO。这样做有利于离线支付、双花检测和并行验证。
 
-The consensus layer uses authorized validators. It does not require miners to compete with hash power. Validators are recognized by governance. This fits the goal of BCS because BCS is a rule-governed economic system, not an anonymous mining competition.
+共识层采用授权验证者方式。它不需要矿工通过算力竞争来决定出块权，而是由治理认可的验证者节点出块和签名。这更适合当前项目的目标，因为 BCS 是一个规则治理型经济系统，不是匿名算力竞赛系统。
 
-The identity layer uses DID and VC. DID proves that a user controls an identity. VC proves that a user has been authenticated by a trusted anchor. Trusted anchors can be the founding team, partner institutions, a governance committee, or later entities approved by system voting.
-
----
-
-### 10. Early and Later Governance
-
-Early governance should be handled by founders and partners through joint voting. The reason is practical: early rules are unstable, parameters need experimentation, security issues must be fixed quickly, and the user base is not yet large enough to support fully open governance. If governance is fully open from day one, it may be captured by speculators, attackers, or short-term interests.
-
-Early governance should decide:
-
-- Initial validator nodes.
-- Trusted anchor list.
-- Initial `phi` and `psi`.
-- Initial N issuance rules.
-- Identity disputes.
-- Protocol and code fixes.
-- Pilot scope.
-- Whether to integrate external payment proof verification.
-
-However, early governance must not permanently monopolize the system. As the system stabilizes, governance should gradually move to the whole system. Later governance may include users, merchants, validators, developers, N holders, employment contributors, and other roles.
-
-Governance migration can happen in stages:
-
-1. Founder and partner multisig governance.
-2. Add early nodes and pilot merchants.
-3. Establish formal proposal and voting processes.
-4. Move parameter changes, trusted-anchor changes, and validator changes to system voting.
-5. Maintain transparent on-chain governance records.
-
-The final goal of governance is not control by one team, but long-term self-correction by the system.
+身份层使用 DID 和 VC。DID 证明用户控制某个身份，VC 证明用户被某个信任锚认证。信任锚可以是创始团队、合作机构、治理委员会或后续系统表决认可的认证方。
 
 ---
 
-### 11. Current Stage and Roadmap
+### 10. 前期治理和后期治理
 
-The project is currently an early prototype. It already has a relatively complete code skeleton and documentation, including transactions, blocks, UTXO, identity, currency rules, offline sync, APIs, wallet, Docker, ZK prototype, and simulation modules. This does not mean it is ready for production.
+前期治理建议由创始人和合伙人共同表决决定。原因很现实：早期系统规则还不稳定，参数还需要试错，安全问题还需要快速修复，用户规模也不足以支撑完全开放治理。如果一开始就完全开放，很容易被投机者、攻击者或短期利益绑架。
 
-The next stage should focus on:
+前期治理应该负责：
 
-1. Stabilizing transaction format and `extra` schema.
-2. Completing the end-to-end DID/VC registration flow.
-3. Improving initial N issuance and replenishment rules.
-4. Improving sale and wage transaction builders.
-5. Improving node synchronization and block production.
-6. Adding more tests, especially offline conflicts and parameter changes.
-7. Building a clear governance proposal and multisig process.
-8. Running a small pilot network.
-9. Simulating how `phi/psi` affect employment, sales, and N circulation.
-10. Deciding whether, when, and how to integrate external payment proof.
+- 确认初始验证者节点。
+- 确认信任锚名单。
+- 决定初始 `phi` 和 `psi`。
+- 决定初始 N 发放规则。
+- 处理身份认证争议。
+- 修复协议和代码漏洞。
+- 决定试点范围。
+- 判断是否接入外部支付凭证验证。
 
-A longer roadmap can be:
+但前期治理不能永久垄断系统。随着系统稳定，治理权应逐步移交给整个系统。后期可以采用更开放的表决治理，例如用户代表、商户代表、验证者、开发者、N 持有者、就业贡献方和其他角色共同参与。
+
+治理移交可以分阶段：
+
+1. 创始人和合伙人多签治理。
+2. 加入早期节点和试点商户共同治理。
+3. 建立正式提案和投票流程。
+4. 把参数变更、信任锚变更、验证者变更逐步交给系统投票。
+5. 形成透明的链上治理记录。
+
+治理的最终目标不是让某个团队控制系统，而是让系统有能力长期自我修正。
+
+---
+
+### 11. 当前阶段和路线图
+
+当前项目处于早期原型阶段。它已经有比较完整的代码骨架和文档，包括交易、区块、UTXO、身份、货币规则、离线同步、API、钱包、Docker、ZK 原型和仿真模块。但这不代表它已经可以直接生产上线。
+
+下一阶段应重点完成：
+
+1. 稳定交易格式和 `extra` schema。
+2. 完成 DID/VC 身份注册的端到端流程。
+3. 完善 N 初始发放和补充规则。
+4. 完善销售和工资交易构建器。
+5. 完善节点间同步和出块流程。
+6. 增加更多测试，尤其是离线冲突和参数变更测试。
+7. 建立清晰的治理提案和多签流程。
+8. 做一个小规模试点网络。
+9. 通过仿真观察 `phi/psi` 对就业、销售和 N 流动的影响。
+10. 决定是否、何时、如何接入外部支付凭证验证。
+
+更长期路线可以分为四步：
 
 ```text
-Stage 1: N-only MVP; chain processes only N; D side uses external_amount
-Stage 2: Optional external proof verification; invoice/payroll/payment hashes
-Stage 3: Pilot governance network with more nodes and participants
-Stage 4: Decide whether to integrate banks, payment gateways, oracles, or on-chain D
+阶段 1: N-only MVP，链上只处理 N，D 侧只用 external_amount
+阶段 2: 可选外部凭证验证，接入发票、工资单、支付凭证哈希
+阶段 3: 试点治理网络，引入更多节点和参与者表决
+阶段 4: 根据实际发展决定是否接入银行、支付网关、oracle 或链上 D
 ```
 
 ---
 
-### 12. Meaning for Participants
+### 12. 对参与者的意义
 
-For ordinary users, N-money aims to make consumption more than one-directional spending. When users buy goods, they can receive N through rules. N is not simply a reward point; it is an asset related to merchant sales capacity, system governance, and economic feedback.
+对普通用户来说，N 货币希望让消费不再只是单向花钱。用户购买商品时，能够通过规则获得 N。N 不只是奖励积分，而是和商家销售能力、系统治理和经济反馈相关的资产。
 
-For workers, the system aims to make being employed, being needed, and providing labor part of a larger monetary feedback structure. Employment relationships influence firms' future sales capacity through N.
+对劳动者来说，系统希望让“被雇佣、被需要、提供劳动”不再只是被动接受工资，而是进入更大的货币反馈结构。劳动关系会通过 N 影响企业未来销售能力。
 
-For merchants and firms, N is not a punishment. It is a new operating constraint. A firm that wants to expand sales must manage its N sources. Providing jobs, participating in the system, earning user trust, and obtaining N from the market become part of business operations.
+对商户和企业来说，N 不是惩罚，而是一种新的经营约束。企业如果想扩大销售，需要管理自己的 N 来源。提供就业、参与系统、获得用户信任、从市场获得 N，都会成为经营的一部分。
 
-For governors, N is a regulatory tool. It is not simply money printing and not simply taxation. It changes market feedback through transaction rules.
+对治理者来说，N 是一个调节工具。它不是简单发钱，也不是简单征税，而是通过交易规则改变市场反馈。
 
-For developers, this project is an open experiment combining monetary theory, blockchain engineering, identity systems, offline payments, and governance mechanisms.
-
----
-
-### 13. Risks and Limits
-
-This project has many uncertainties.
-
-First, the economic model needs experimentation. If `phi` and `psi` are set poorly, merchants may face excessive pressure, workers may carry excessive burden, N circulation may be weak, or speculation may appear.
-
-Second, external payment authenticity cannot be fully proven on-chain in the MVP. Cash, banks, payment gateways, invoices, and payroll systems are external systems. The current design treats them as optional references. Later, verification can be added according to business needs.
-
-Third, identity must be handled carefully. If too strict, it blocks users. If too loose, it invites abuse and fake transactions.
-
-Fourth, governance may be captured by a small group. Early founder governance helps start the system, but later governance must become transparent and systematic.
-
-Fifth, the technical implementation is still early. Some parts are prototypes, simplified implementations, or require security review. The current version should not be treated as a production-grade financial system.
-
-Sixth, social understanding takes time. N-money is not a traditional point system and not a normal token. It represents a new economic feedback rule that must build consensus through documentation, demos, pilots, and real data.
+对开发者来说，这个项目是一个结合货币理论、区块链工程、身份系统、离线支付和治理机制的开放实验。
 
 ---
 
-### 14. How to Join
+### 13. 风险和限制
 
-This project needs many kinds of contributors:
+这个项目有很多不确定性。
 
-- Monetary-theory and economic-model researchers.
-- Blockchain core developers.
-- Python backend developers.
-- Wallet and frontend developers.
-- DID/VC identity-system developers.
-- Cryptography and ZK researchers.
-- Simulation and data-analysis contributors.
-- Merchants, employers, and pilot organizations.
-- People concerned with employment, age discrimination, economic crises, and social resource allocation.
+第一，经济模型需要试验。`phi` 和 `psi` 设置不当，可能导致商户压力过大、工人负担过重、N 流动不足或投机行为。
 
-If you agree with one basic judgment, this project may be worth exploring together: money is not only a payment tool, but also a tool for allocating social resources; the current one-directional D-money system gradually exposes structural weaknesses after industrialization and automation; N-money and BCS may provide a new direction.
+第二，外部支付真实性在 MVP 阶段不能完全由链上证明。因为现实货币、银行、现金、支付网关、发票和工资单都是链外系统。当前方案把它们作为可选引用，后续需要根据业务需求逐步增加验证。
 
-This project does not promise immediate success. But it offers a direction that can be engineered, governed, piloted, challenged, and improved.
+第三，身份认证需要谨慎。过严会阻碍用户进入，过松会导致滥用和虚假交易。
+
+第四，治理可能被少数人控制。前期创始团队治理是为了启动系统，但后期必须逐步透明化和系统化。
+
+第五，技术实现还很早期。代码中仍有原型、简化实现和需要安全审计的部分。不能把当前版本当成生产级金融系统直接使用。
+
+第六，社会理解需要时间。N 货币不是传统积分，也不是普通代币。它代表一种新的经济反馈规则，需要通过文档、演示、试点和真实数据逐步建立共识。
+
+---
+
+### 14. 如何加入
+
+这个项目需要很多方向的参与者：
+
+- 货币理论和经济模型研究者。
+- 区块链底层开发者。
+- Python 后端开发者。
+- 钱包和前端开发者。
+- DID/VC 身份系统开发者。
+- 密码学和 ZK 研究者。
+- 仿真和数据分析人员。
+- 商户、雇主和试点组织。
+- 关注就业、年龄歧视、经济危机和社会资源分配的人。
+
+如果你认同一个基本判断：货币不只是支付工具，也是社会资源分配工具；现行单向 D 货币在工业化和自动化之后逐渐暴露结构性缺点；那么 N 货币和 BCS 可能值得一起探索。
+
+这个项目不承诺马上成功，但它提出了一个可以工程化、可以治理、可以试点、可以被反驳也可以被改进的方向。
+
+---
