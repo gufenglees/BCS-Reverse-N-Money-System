@@ -1,0 +1,20 @@
+{
+  "throughput_tps": 0.72,
+  "avg_latency_ms": 0.01,
+  "confirmation_time_ms": 0.01,
+  "sync_success_rate": 100,
+  "conflict_rate": 0.0,
+  "n_concentration_gini": 0.2876,
+  "n_circulating": 5668534217868,
+  "offline_tx_success_rate": 25.0,
+  "total_transactions": 4150,
+  "confirmed_transactions": 50,
+  "blocks_created": 1,
+  "agents_online": 988,
+  "agents_offline": 12,
+  "nodes_online": 50,
+  "nodes_offline": 50,
+  "partition_events": 0,
+  "failure_events": 0,
+  "elapsed_seconds": 69.22
+}

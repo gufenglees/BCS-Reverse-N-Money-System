@@ -1,0 +1,37 @@
+# BCS Client Docker Image
+# ========================
+# Lightweight client image with CLI tools, wallet, and offline transaction support.
+#
+# Build:
+#   docker build -f docker/Dockerfile.client -t bcs-client:latest .
+#
+# Run:
+#   docker run -it bcs-client:latest bcs --help
+#   docker run -it bcs-client:latest bcs wallet create --label "my_wallet"
+
+FROM python:3.11-slim
+
+LABEL maintainer="BCS Team"
+LABEL description="BCS Lightweight Client"
+
+# Install minimal system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy requirements and install
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy package source.  Keeping the bcs_chain package directory intact makes
+# `python -m bcs_chain.cli.main` work the same way in containers and locally.
+COPY . /app/bcs_chain/
+
+ENV PYTHONPATH=/app
+
+# Default interactive shell
+ENTRYPOINT ["python", "-m", "bcs_chain.cli.main"]
+CMD ["--help"]

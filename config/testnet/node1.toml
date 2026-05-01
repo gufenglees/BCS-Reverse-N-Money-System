@@ -1,0 +1,38 @@
+# BCS Testnet — Validator Node 1
+# ==============================
+[network]
+listen_host = "0.0.0.0"
+p2p_port = 10001
+rest_port = 8081
+grpc_port = 50051
+bootstrap_peers = ["node2:10002", "node3:10003"]
+network_id = "bcs-testnet"
+
+[consensus]
+block_interval_ms = 5000
+validator_id = 0
+validator_pubkey_hex = "0495a2f0c7a8b1d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1"
+validator_privkey_hex = "deadbeef00000000000000000000000000000000000000000000000000000000"
+validator_name = "node-1"
+
+[storage]
+data_dir = "/data/bcs/node1"
+db_name = "bcs_chain.db"
+
+[governance]
+phi_numerator = 3
+phi_denominator = 100
+psi_numerator = 5
+psi_denominator = 100
+required_gov_signatures = 2
+n_lower_bound = 0
+n_upper_bound = 10_000_000_000_000
+
+[api]
+enable_rest = true
+enable_grpc = true
+cors_origins = ["*"]
+rate_limit_rps = 100
+
+[identity]
+trust_anchors = []

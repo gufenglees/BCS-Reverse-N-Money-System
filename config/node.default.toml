@@ -1,0 +1,49 @@
+# BCS Node Default Configuration
+# ==============================
+# Copy this file and customize for your deployment.
+# All values shown are defaults.
+
+[network]
+listen_host = "0.0.0.0"
+p2p_port = 10001
+rest_port = 8080
+grpc_port = 50051
+bootstrap_peers = []
+network_id = "bcs-testnet"
+
+[consensus]
+block_interval_ms = 5000
+validator_id = 0
+validator_pubkey_hex = ""
+validator_privkey_hex = ""
+validator_name = "node-0"
+
+[storage]
+data_dir = "./bcs_data"
+db_name = "bcs_chain.db"
+
+[governance]
+phi_numerator = 3
+phi_denominator = 100
+psi_numerator = 5
+psi_denominator = 100
+required_gov_signatures = 2
+n_lower_bound = 0
+n_upper_bound = 10_000_000_000_000
+
+[api]
+enable_rest = true
+enable_grpc = true
+cors_origins = ["*"]
+rate_limit_rps = 100
+
+[identity]
+# Bootstrap Trust Anchors are accepted at genesis/config load time.
+# Later additions/removals should be governed on-chain.
+# Example:
+# [[identity.trust_anchors]]
+# id = "ta-founder-01"
+# name = "Founder Identity Authority"
+# public_key = "04..."
+# url = "https://identity.example.invalid"
+trust_anchors = []

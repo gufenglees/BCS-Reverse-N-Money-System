@@ -1,0 +1,145 @@
+# BCS Development Network Docker Compose
+# ======================================
+# Spins up a 4-node testnet:
+#   • 3 validator nodes (PoA-BFT consensus)
+#   • 1 observer node (no validator keys)
+#   • 1 API gateway (nginx reverse proxy)
+#
+# Usage:
+#   cd docker && docker-compose up --build
+#   docker-compose logs -f node1
+#   docker-compose down -v
+
+version: "3.8"
+
+services:
+  # --- Validator Node 1 ---
+  node1:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.node
+    container_name: bcs-node1
+    hostname: node1
+    ports:
+      - "8081:8081"
+      - "10001:10001"
+    volumes:
+      - node1-data:/data/bcs
+      - ../config/testnet/node1.toml:/app/bcs_chain/config/node.toml:ro
+    environment:
+      - BCS_CONFIG=/app/bcs_chain/config/node.toml
+    networks:
+      - bcs-net
+    command: ["/app/bcs_chain/config/node.toml"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8081/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # --- Validator Node 2 ---
+  node2:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.node
+    container_name: bcs-node2
+    hostname: node2
+    ports:
+      - "8082:8082"
+      - "10002:10002"
+    volumes:
+      - node2-data:/data/bcs
+      - ../config/testnet/node2.toml:/app/bcs_chain/config/node.toml:ro
+    environment:
+      - BCS_CONFIG=/app/bcs_chain/config/node.toml
+    networks:
+      - bcs-net
+    command: ["/app/bcs_chain/config/node.toml"]
+    depends_on:
+      node1:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8082/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # --- Validator Node 3 ---
+  node3:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.node
+    container_name: bcs-node3
+    hostname: node3
+    ports:
+      - "8083:8083"
+      - "10003:10003"
+    volumes:
+      - node3-data:/data/bcs
+      - ../config/testnet/node3.toml:/app/bcs_chain/config/node.toml:ro
+    environment:
+      - BCS_CONFIG=/app/bcs_chain/config/node.toml
+    networks:
+      - bcs-net
+    command: ["/app/bcs_chain/config/node.toml"]
+    depends_on:
+      node2:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8083/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # --- Observer Node (no validator) ---
+  observer:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.node
+    container_name: bcs-observer
+    hostname: observer
+    ports:
+      - "8084:8084"
+      - "10004:10004"
+    volumes:
+      - observer-data:/data/bcs
+    environment:
+      - BCS_CONFIG=/app/bcs_chain/config/node.default.toml
+    networks:
+      - bcs-net
+    command: ["/app/bcs_chain/config/node.default.toml"]
+    depends_on:
+      - node1
+      - node2
+      - node3
+
+  # --- API Gateway (nginx) ---
+  gateway:
+    image: nginx:alpine
+    container_name: bcs-gateway
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - bcs-net
+    depends_on:
+      - node1
+      - node2
+      - node3
+
+networks:
+  bcs-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  node1-data:
+  node2-data:
+  node3-data:
+  observer-data:
